@@ -1,0 +1,33 @@
+StyleBuilder
+============
+
+外部cssが使えないガラケーのview開発を簡単にするプラグイン
+
+
+Example
+=======
+<div style="color:#ff0000">hello, world!</div> を出力するコード
+
+<%= content_tag(:div, 'hello, world!').color('#ff0000') %>
+<% content_tag(:div).color('#ff0000') do %>
+  hello, world!
+<% end %>
+<%= content_tag(:div, 'hello, world!').red %>
+<% content_tag(:div).red do %>
+  hello, world!
+<% end %>
+
+#color('#ff0000') のように cssで指定できるものはそのまま書けます
+( text-align などは text_align になります )
+red は style_builder/css_style.rb にサンプルメソッドとして定義してあります
+
+メソッドチェインできます
+<%= content_tag(:div, 'hello, world!').red.center %>
+#=> <div style="text-align:center;color:#ff0000">hello, world!</div>
+
+もちろんdiv以外の全てのタグで使えます
+
+CssStyleにメソッドを追加していけば
+あたかもcssのクラス指定をするような感覚でスタイルを指定することが出来ます
+
+Copyright (c) 2010 masarakki <masaki@hisme.net>, released under the MIT license
