@@ -2,7 +2,7 @@ StyleBuilder
 ============
 
 外部cssが使えないガラケーのview開発を簡単にするプラグイン
-
+content_tag に続いてスタイルを書くことが出来ます
 
 Example
 =======
