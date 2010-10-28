@@ -6,8 +6,13 @@ module StyleBuilder
     
     def method_missing(name, *args)
       if match = name.to_s.match(/^(.+?)=?$/)
-        @styles[$1] = args.first
-        self
+        self.class.send(:define_method, $1) do |*params|
+          params.present? ? _set($1, params.first) : _delete($1)
+        end
+        self.class.send(:define_method, "#{$1}=") do |param|
+          _set($1, param)
+        end
+        send($1, *args)
       end
     end
     
@@ -31,6 +36,16 @@ module StyleBuilder
     
     def center
       self.text_align = 'center'
+    end
+    
+    private
+    def _set(key, value)
+      @styles[key.to_sym] = value
+      self
+    end
+    
+    def _delete(key)
+      @styles.delete(key.to_sym)
     end
   end
 end
