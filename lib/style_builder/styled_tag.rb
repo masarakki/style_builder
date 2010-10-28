@@ -14,12 +14,15 @@ module StyleBuilder
     end
     
     def method_missing(method_name, *method_args, &block)
-      style.send(method_name, *method_args)
-      if block_given?
-        controller.send(method, args.first, :style => style.to_style, &block)
-      else
-        self
+      self.class.send(:define_method, method_name) do |*method_args, &block|
+        style.send(method_name, *method_args)
+        if block
+          controller.send(method, args.first, 'xxx', :style => style.to_style, &block)
+        else
+          self
+        end
       end
+      send(method_name, *method_args, &block)
     end
     
     def to_s
